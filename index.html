@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prior Approval AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="page-bg">
+        <div class="gradient-circle circle-1"></div>
+        <div class="gradient-circle circle-2"></div>
+        <div class="gradient-circle circle-3"></div>
+    </div>
+
+    <main class="app-container">
+
+        <section class="hero-section">
+            <div class="badge">
+                🔍 Prior Approval AI — Warranty Claim Validation with LangGraph RAG
+            </div>
+            <h1>AI-Assisted Claim Validation</h1>
+            <p>
+                Submit a warranty claim narrative and parts list. The AI multi-agent system
+                will validate each part against the diagnosis using RAG-grounded evidence.
+            </p>
+        </section>
+
+        <section class="planner-card">
+            <div class="card-header">
+                <div>
+                    <h2>Submit a Warranty Claim</h2>
+                    <p>Enter the technician narrative and requested parts below.</p>
+                </div>
+                <div class="status-pill">
+                    <span class="status-dot"></span>
+                    Online
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="narrativeInput">Technician Narrative</label>
+                <textarea
+                    id="narrativeInput"
+                    placeholder="Customer states vehicle has an oil leak from the rear end. Found oil leak at pinion seal on rear differential. Recommend replacing pinion seal..."
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="partsInput">Requested Parts (one per line)</label>
+                <textarea
+                    id="partsInput"
+                    class="parts-input"
+                    placeholder="Pinion seal&#10;Differential oil&#10;Crush sleeve"
+                ></textarea>
+            </div>
+
+            <div class="input-area">
+                <button id="sendBtn" onclick="submitClaim()">
+                    <span id="btnText">Validate Claim</span>
+                    <span id="btnLoader" class="loader hidden"></span>
+                </button>
+            </div>
+
+            <div class="quick-prompts">
+                <button onclick="setExample('valid')">Valid Claim Example</button>
+                <button onclick="setExample('suspicious')">Suspicious Parts Example</button>
+                <button onclick="setExample('mixed')">Mixed Claim Example</button>
+            </div>
+        </section>
+
+        <section id="resultSection" class="result-section hidden">
+            <div class="result-header">
+                <div>
+                    <h2>Validation Results</h2>
+                    <p id="threadInfo">Thread ID: -</p>
+                </div>
+                <div class="result-actions">
+                    <button class="copy-btn" onclick="copyResult()">Copy</button>
+                    <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+                </div>
+            </div>
+
+            <div id="pdfContent" class="pdf-content">
+                <h1 class="pdf-title">Warranty Claim Validation Report</h1>
+
+                <!-- Decision Banner -->
+                <div id="decisionBanner" class="decision-banner"></div>
+
+                <!-- Per-Part Scores Table -->
+                <div id="partsTable" class="parts-table-container"></div>
+
+                <!-- Explanation -->
+                <div id="resultBox" class="result-box"></div>
+            </div>
+        </section>
+
+        <section id="errorBox" class="error-box hidden"></section>
+
+    </main>
+
+    <footer>
+        Built with FastAPI, LangGraph, Groq, PostgreSQL &amp; ChromaDB
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="/static/script.js"></script>
+
+</body>
+</html>
